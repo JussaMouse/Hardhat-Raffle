@@ -1,7 +1,6 @@
 const { assert, expect } = require("chai");
-const { getNamedAccounts, deployments, ethers, network } = require("hardhat");
-const { developmentChains, networkConfig } = require("../../helper-hardhat-config");
-const { describe, beforeEach, it } = require("mocha");
+const { getNamedAccounts, ethers, network } = require("hardhat");
+const { developmentChains } = require("../../helper-hardhat-config");
 
 developmentChains.includes(network.name)
     ? describe.skip
@@ -38,7 +37,7 @@ developmentChains.includes(network.name)
                               console.log(`endingTimestamp: ${endingTimestamp}`);
 
                               // one  way to check if the raffle has been reset:
-                              // await expect(raffle.getPlayer(0)).to.be.reverted;
+                              await expect(raffle.getPlayer(0)).to.be.reverted;
                               assert.equal(recentWinner.toString(), accounts[0].address);
                               assert.equal(raffleState, 0);
                               assert.equal(
