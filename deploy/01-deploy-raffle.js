@@ -6,7 +6,7 @@ const {
 } = require("../helper-hardhat-config");
 const { verify } = require("../utils/verify");
 
-const VRF_SUB_FUND_AMOUNT = ethers.utils.parseEther("1");
+const VRF_SUB_FUND_AMOUNT = ethers.utils.parseEther("5");
 
 module.exports = async function ({ getNamedAccounts, deployments }) {
     const { deploy, log } = deployments;
@@ -45,9 +45,9 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
         waitConfirmations: waitBlockConfirmations || 1,
     });
 
-    // if (chainId == 31337) {
-    //     await vrfCoordinatorV2Mock.addConsumer(subscriptionId.toNumber(), raffle.address);
-    // }
+    if (chainId == 31337) {
+        await vrfCoordinatorV2Mock.addConsumer(subscriptionId.toNumber(), raffle.address);
+    }
 
     if (!developmentChains.includes(network.name) && process.env.ETHERSCAN_API_KEY) {
         log("Verifying...");
